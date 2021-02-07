@@ -10,7 +10,7 @@ import {
 import SortIcon from '@material-ui/icons/Sort';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-// We need createclasses beacsue of Typescript
+// We need createclasses beacause of Typescript
 // https://material-ui.com/classes/api/#createclasses-classes-classes
 const useclasses = makeStyles((theme) =>
   createStyles({
@@ -61,7 +61,7 @@ const useclasses = makeStyles((theme) =>
     },
     downAction: {
       color: theme.palette.primary.main,
-      fontSize: '4rem',
+      fontSize: '3rem',
     },
   })
 );
