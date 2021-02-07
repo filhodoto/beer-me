@@ -20,11 +20,13 @@ interface InfoCardProps {
   name: string;
   tagline: string;
   description: string;
-  image_url: string;
+  image_url: string | null;
 }
-
-const InfoCard = (props: InfoCardProps) => {
+const InfoCard = ({ name, tagline, description, image_url }: InfoCardProps) => {
   const classes = useStyles();
+
+  const defaultImgPath =
+    'https://images.pexels.com/photos/237774/pexels-photo-237774.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
 
   return (
     <Card className={classes.card}>
@@ -32,16 +34,16 @@ const InfoCard = (props: InfoCardProps) => {
         <CardMedia
           className={classes.mediaImg}
           component='img'
-          alt={props.tagline}
-          image={props.image_url}
-          title={props.name}
+          alt={tagline}
+          image={image_url === null ? defaultImgPath : image_url}
+          title={name}
         />
         <CardContent>
           <Typography gutterBottom variant='h5' color='primary' component='h2'>
-            {props.name}
+            {name}
           </Typography>
           <Typography variant='body2' color='textSecondary' component='p'>
-            {props.description}
+            {description}
           </Typography>
         </CardContent>
       </CardActionArea>
