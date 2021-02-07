@@ -1,6 +1,12 @@
 import React, { FC, useEffect, useState } from 'react';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { AppBar, Collapse, IconButton, Toolbar } from '@material-ui/core';
+import {
+  AppBar,
+  Collapse,
+  IconButton,
+  Toolbar,
+  Container,
+} from '@material-ui/core';
 import SortIcon from '@material-ui/icons/Sort';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -8,7 +14,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // https://material-ui.com/classes/api/#createclasses-classes-classes
 const useclasses = makeStyles((theme) =>
   createStyles({
-    wrapper: (props) => ({
+    wrapper: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -17,20 +23,21 @@ const useclasses = makeStyles((theme) =>
       backgroundRepeat: 'no-repeat',
       backgroundSize: 'cover',
       color: theme.palette.text.primary,
-    }),
+    },
     overlay: {
       display: 'block',
       position: 'absolute',
       height: '100%',
       width: '100%',
       backgroundColor: 'rgba(0,0,0, 0.4)',
+      zIndex: 0,
     },
     appbar: {
       background: 'none',
       color: theme.palette.text.primary,
     },
     appbarWrapper: {
-      width: '80%',
+      width: '100%',
       margin: '0 auto',
     },
     appbarTitle: {
@@ -43,9 +50,11 @@ const useclasses = makeStyles((theme) =>
     colorText: {
       color: theme.palette.primary.main,
     },
-    container: {
-      textAlign: 'center',
+    mainContainer: {
       zIndex: 1,
+    },
+    collapse: {
+      textAlign: 'center',
     },
     title: {
       fontSize: '2.5rem',
@@ -68,34 +77,37 @@ const Header: FC = (): JSX.Element => {
 
   return (
     <div className={classes.wrapper}>
-      <AppBar className={classes.appbar} elevation={0}>
-        <Toolbar className={classes.appbarWrapper}>
-          <h1 className={classes.appbarTitle}>
-            <span className={classes.colorText}>Beer</span>Me
-          </h1>
+      <Container maxWidth='md' className={classes.mainContainer}>
+        <AppBar className={classes.appbar} elevation={0}>
+          <Toolbar className={classes.appbarWrapper}>
+            <h1 className={classes.appbarTitle}>
+              <span className={classes.colorText}>Beer</span>Me
+            </h1>
+            <IconButton>
+              <SortIcon className={classes.icon} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <Collapse
+          className={classes.collapse}
+          in={showText}
+          {...(showText ? { timeout: 1000 } : {})}
+          collapsedHeight={50}
+        >
+          <h2 className={classes.title}>
+            Are you <span className={classes.colorText}>Thirsty?</span>
+            <br />
+            See some <span className={classes.colorText}>suggestions</span>{' '}
+            below.
+          </h2>
           <IconButton>
-            <SortIcon className={classes.icon} />
+            <ExpandMoreIcon className={classes.downAction} />
           </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Collapse
-        className={classes.container}
-        in={showText}
-        {...(showText ? { timeout: 1000 } : {})}
-        collapsedHeight={50}
-      >
-        <h2 className={classes.title}>
-          Are you <span className={classes.colorText}>Thirsty?</span>
-          <br />
-          See some <span className={classes.colorText}>suggestions</span> below.
-        </h2>
-        <IconButton>
-          <ExpandMoreIcon className={classes.downAction} />
-        </IconButton>
-      </Collapse>
+        </Collapse>
+      </Container>
       <span className={classes.overlay} />
     </div>
   );
 };
 
-export default Header;
+export default React.memo(Header);
